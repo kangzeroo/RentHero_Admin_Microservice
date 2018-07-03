@@ -1,5 +1,5 @@
 const pg = require('pg')
-const config = require('../credentials/'+process.env.NODE_ENV+'/postgres_config')[process.env.NODE_ENV]
+const config = require('../credentials/'+process.env.NODE_ENV+'/pg_renthero_admin')[process.env.NODE_ENV]
 
 // create a config to configure both pooling behavior
 // and client options
