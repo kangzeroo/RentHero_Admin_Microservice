@@ -6,7 +6,10 @@ const originCheck = require('./auth/originCheck').originCheck
 
 // routes
 const Test = require('./routes/test_routes')
-const AssistantRoutes = require('./routes/assistant_routes')
+const AdminRoutes = require('./routes/admin_routes')
+
+const AdsRoutes = require('./routes/ads_routes')
+const AssistantsRoutes = require('./routes/assistants_routes')
 // const GoogleRoutes = require('./routes/google_routes')
 // const UserRoutes = require('./routes/user_routes')
 // const CorpRoutes = require('./routes/corp_routes')
@@ -23,8 +26,15 @@ module.exports = function(app){
 	// tests
 	app.get('/test', json_encoding, Test.test)
 
+	// admin routes
+	app.post('/retrieve_admin_profile', [json_encoding, originCheck, Google_JWT_Check], AdminRoutes.retrieve_admin_profile)
+
 	// assistant routes
-	app.post('/retrieve_assistant_profile', [json_encoding, originCheck, Google_JWT_Check], AssistantRoutes.retrieve_assistant_profile)
+	app.post('/get_assistants', [json_encoding, originCheck, Google_JWT_Check], AssistantsRoutes.get_assistants)
+	app.post('/insert_assistant', [json_encoding, originCheck, Google_JWT_Check], AssistantsRoutes.insert_assistant)
+
+	// ads routes
+	app.post('/get_ads', [json_encoding, originCheck, Google_JWT_Check], AdsRoutes.get_ads)
 
 	// app.post('/auth_test', [json_encoding, originCheck, Google_JWT_Check], Test.auth_test)
 	//
