@@ -9,11 +9,11 @@ const uuid = require('uuid')
 
 const query = promisify(pool.query)
 
-exports.get_all_assistants = () => {
+exports.get_all_agents = () => {
   const p = new Promise((res, rej) => {
-    const getAssistants = `SELECT * FROM assistants`
+    const getAgents = `SELECT * FROM agents`
 
-    query(getAssistants, (err, results) => {
+    query(getAgents, (err, results) => {
       if (err) {
         console.log(err)
         rej(err)
@@ -24,18 +24,18 @@ exports.get_all_assistants = () => {
   return p
 }
 
-exports.create_assistant = (assistant_id, email) => {
+exports.create_agent = (agent_id, email) => {
   const p = new Promise((res, rej) => {
-    const values = [assistant_id, email]
+    const values = [agent_id, email]
 
-    const insertAssistant = `INSERT INTO assistants (assistant_id, email) VALUES ($1, $2)`
+    const insertAgent = `INSERT INTO agents (agent_id, email) VALUES ($1, $2)`
 
-    query(insertAssistant, values, (err, results) => {
+    query(insertAgent, values, (err, results) => {
       if (err) {
         console.log(err)
         rej(err)
       }
-      res('Successfully gave assistant access to Assistant Portal')
+      res('Successfully gave agent access to Agent Portal')
     })
 
   })

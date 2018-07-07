@@ -9,7 +9,7 @@ const Test = require('./routes/test_routes')
 const AdminRoutes = require('./routes/admin_routes')
 
 const AdsRoutes = require('./routes/ads_routes')
-const AssistantsRoutes = require('./routes/assistants_routes')
+const AgentsRoutes = require('./routes/agents_routes')
 // const GoogleRoutes = require('./routes/google_routes')
 // const UserRoutes = require('./routes/user_routes')
 // const CorpRoutes = require('./routes/corp_routes')
@@ -30,8 +30,8 @@ module.exports = function(app){
 	app.post('/retrieve_admin_profile', [json_encoding, originCheck, Google_JWT_Check], AdminRoutes.retrieve_admin_profile)
 
 	// assistant routes
-	app.post('/get_assistants', [json_encoding, originCheck, Google_JWT_Check], AssistantsRoutes.get_assistants)
-	app.post('/insert_assistant', [json_encoding, originCheck, Google_JWT_Check], AssistantsRoutes.insert_assistant)
+	app.post('/get_agents', [json_encoding, originCheck, Google_JWT_Check], AgentsRoutes.get_agents)
+	app.post('/insert_agent', [json_encoding, originCheck, Google_JWT_Check], AgentsRoutes.insert_agent)
 
 	// ads routes
 	app.post('/get_ads', [json_encoding, originCheck, Google_JWT_Check], AdsRoutes.get_ads)
