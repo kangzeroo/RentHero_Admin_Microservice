@@ -23,7 +23,7 @@ router(app);
 
 // Server setup
 // if there is an environment variable of PORT already defined, use it. otherwise use port 3002
-const port = process.env.PORT || 7105
+const port = process.env.PORT || 7301
 
 // create a server with the native node https library
 if (process.env.NODE_ENV === 'production') {
