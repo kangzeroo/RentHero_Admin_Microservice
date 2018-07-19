@@ -1,1 +1,1 @@
-docker build -t renthero_admin_microservice .
+docker build -t admin_microservice .
