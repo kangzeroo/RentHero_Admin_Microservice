@@ -54,14 +54,14 @@ exports.create_agent = (agent_id, friendly_name, email) => {
 exports.get_all_operators = () => {
   const p = new Promise((res, rej) => {
     const queryString = `SELECT a.operator_id, a.first_name, a.last_name, a.email, a.phone, a.created_at, a.updated_at,
-                                b.agent_ids
-                           FROM operators a
-                           LEFT OUTER JOIN (
-                             SELECT operator_id, JSON_AGG(agent_id) AS agent_ids
-                               FROM agents_to_operators
-                              GROUP BY operator_id
-                           ) b
-                            ON a.operator_id = b.operator_id
+                              b.agent_ids
+                         FROM operators a
+                         LEFT OUTER JOIN (
+                           SELECT operator_id, JSON_AGG(agent_id) AS agent_ids
+                             FROM agents_to_operators
+                            GROUP BY operator_id
+                         ) b
+                          ON a.operator_id = b.operator_id
                         `
 
     query(queryString, (err, results) => {
