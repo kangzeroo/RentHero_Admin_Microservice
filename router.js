@@ -10,6 +10,8 @@ const AdminRoutes = require('./routes/admin_routes')
 
 const AdsRoutes = require('./routes/ads_routes')
 const AgentsRoutes = require('./routes/agents_routes')
+const OperatorRoutes = require('./routes/operator_routes')
+
 // const GoogleRoutes = require('./routes/google_routes')
 // const UserRoutes = require('./routes/user_routes')
 const CorpRoutes = require('./routes/corp_routes')
@@ -32,8 +34,11 @@ module.exports = function(app){
 	// assistant routes
 	app.post('/get_agents', [json_encoding, originCheck, Google_JWT_Check], AgentsRoutes.get_agents)
 	app.post('/insert_agent', [json_encoding, originCheck, Google_JWT_Check], AgentsRoutes.insert_agent)
-	app.post('/get_operators', [json_encoding, originCheck, Google_JWT_Check], AgentsRoutes.get_operators)
-	app.post('/insert_operator', [json_encoding, originCheck, Google_JWT_Check], AgentsRoutes.insert_operator)
+
+	// operator routes
+	app.post('/get_operators', [json_encoding, originCheck, Google_JWT_Check], OperatorRoutes.get_operators)
+	app.post('/insert_operator', [json_encoding, originCheck, Google_JWT_Check], OperatorRoutes.insert_operator)
+	app.post('/select_operator_for_intelligence', [json_encoding, originCheck, Google_JWT_Check], OperatorRoutes.select_operator_for_intelligence)
 
 	// ads routes
 	app.post('/get_ads', [json_encoding, originCheck, Google_JWT_Check], AdsRoutes.get_ads)
