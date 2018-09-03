@@ -29,28 +29,3 @@ exports.insert_agent = (req, res, next) => {
       res.status(500).send('Failed to insert agent')
     })
 }
-
-exports.get_operators = (req, res, next) => {
-  AgentsQueries.get_all_operators()
-    .then((data) => {
-      res.json(data.rows)
-    })
-    .catch((err) => {
-      console.log(err)
-      res.status(500).send('Failed to get operators.')
-    })
-}
-
-exports.insert_operator = (req, res, next) => {
-  const info = req.body
-  const operator_id = uuid.v4()
-
-  AgentsQueries.create_operator(operator_id, info.email, info.agent_id)
-    .then((data) => {
-      res.json(data)
-    })
-    .catch((err) => {
-      console.log(err)
-      res.status(500).send('Failed to create operator')
-    })
-}
