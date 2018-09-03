@@ -39,6 +39,7 @@ module.exports = function(app){
 	app.post('/get_operators', [json_encoding, originCheck, Google_JWT_Check], OperatorRoutes.get_operators)
 	app.post('/insert_operator', [json_encoding, originCheck, Google_JWT_Check], OperatorRoutes.insert_operator)
 	app.post('/select_operator_for_intelligence', [json_encoding, originCheck, Google_JWT_Check], OperatorRoutes.select_operator_for_intelligence)
+	app.post('/remove_operator_from_intelligence', [json_encoding, originCheck, Google_JWT_Check], OperatorRoutes.remove_operator_from_intelligence)
 
 	// ads routes
 	app.post('/get_ads', [json_encoding, originCheck, Google_JWT_Check], AdsRoutes.get_ads)

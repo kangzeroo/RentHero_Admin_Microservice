@@ -44,3 +44,16 @@ exports.select_operator_for_intelligence = (req, res, next) => {
       res.status(500).send(err)
     })
 }
+
+exports.remove_operator_from_intelligence = (req, res, next) => {
+  const info = req.body
+
+  OperatorQueries.remove_operator_from_intelligence(info.agent_id, info.operator_id)
+    .then((data) => {
+      res.json(data)
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).send(err)
+    })
+}

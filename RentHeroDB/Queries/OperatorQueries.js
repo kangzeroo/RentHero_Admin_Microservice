@@ -106,3 +106,24 @@ exports.select_operator_for_intelligence = (agent_id, operator_id) => {
   })
   return p
 }
+
+exports.remove_operator_from_intelligence = (agent_id, operator_id) => {
+  const p = new Promise((res, rej) => {
+    const values = [agent_id, operator_id]
+    const queryString = `DELETE FROM agents_to_operators
+                          WHERE agent_id = $1
+                            AND operator_id = $2
+                        `
+
+    query(queryString, values, (err, results) => {
+      if (err) {
+        console.log(err)
+        rej(err)
+      }
+      res({
+        message: 'Successfully removed operator from intelligence group'
+      })
+    })
+  })
+  return p
+}
