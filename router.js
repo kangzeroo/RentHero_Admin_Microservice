@@ -34,6 +34,7 @@ module.exports = function(app){
 	// assistant routes
 	app.post('/get_agents', [json_encoding, originCheck, Google_JWT_Check], AgentsRoutes.get_agents)
 	app.post('/insert_agent', [json_encoding, originCheck, Google_JWT_Check], AgentsRoutes.insert_agent)
+	app.post('/update_agent', [json_encoding, originCheck, Google_JWT_Check], AgentsRoutes.update_agent)
 
 	// operator routes
 	app.post('/get_operators', [json_encoding, originCheck, Google_JWT_Check], OperatorRoutes.get_operators)
