@@ -11,7 +11,7 @@ const query = promisify(pool.query)
 
 exports.get_all_agents = () => {
   const p = new Promise((res, rej) => {
-    const getAgents = `SELECT a.agent_id, a.friendly_name, a.email, a.phone, a.created_at, a.updated_at,
+    const getAgents = `SELECT a.agent_id, a.friendly_name, a.email, a.phone, a.actual_email, a.created_at, a.updated_at,
                               b.operator_ids
                          FROM agents a
                          LEFT OUTER JOIN (
@@ -47,6 +47,32 @@ exports.create_agent = (agent_id, friendly_name, email) => {
       res('Successfully gave agent access to Agent Portal')
     })
 
+  })
+  return p
+}
+
+exports.update_agent = (agent_id, friendly_name, email, actual_email) => {
+  const p = new Promise((res, rej) => {
+    const values = [agent_id, friendly_name, email, actual_email]
+    const queryString = `UPDATE agents
+                            SET friendly_name = $2,
+                                email = $3,
+                                actual_email = $4,
+                                updated_at = CURRENT_TIMESTAMP
+                          WHERE agent_id = $1
+                          RETURNING *
+                        `
+
+    query(queryString, values, (err, results) => {
+      if (err) {
+        console.log(err)
+        rej('Failed to update intelligence group')
+      }
+      res({
+        message: 'Successfully updated intelligence group',
+        agent: results.rows[0]
+      })
+    })
   })
   return p
 }

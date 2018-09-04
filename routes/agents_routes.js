@@ -29,3 +29,18 @@ exports.insert_agent = (req, res, next) => {
       res.status(500).send('Failed to insert agent')
     })
 }
+
+
+exports.update_agent = (req, res, next) => {
+  const info = req.body
+
+  AgentsQueries.update_agent(info.agent_id, info.friendly_name, info.email, info.actual_email)
+    .then((data) => {
+      res.json(data)
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).send(err)
+    })
+
+}
