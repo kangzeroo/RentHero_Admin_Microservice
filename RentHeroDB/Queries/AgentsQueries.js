@@ -35,9 +35,10 @@ exports.get_all_agents = () => {
 
 exports.create_agent = (agent_id, friendly_name, email) => {
   const p = new Promise((res, rej) => {
-    const values = [agent_id, friendly_name, email]
+    const tech_email = email.split('@')[0].concat(`.${uuid.v4()}${process.env.NODE_ENV === 'production' ? '@renthero.tech' : '@devagentemail.net'}`)
+    const values = [agent_id, friendly_name, tech_email, email]
 
-    const insertAgent = `INSERT INTO agents (agent_id, friendly_name, email) VALUES ($1, $2, $3)`
+    const insertAgent = `INSERT INTO agents (agent_id, friendly_name, email, actual_email) VALUES ($1, $2, $3, $4)`
 
     query(insertAgent, values, (err, results) => {
       if (err) {
