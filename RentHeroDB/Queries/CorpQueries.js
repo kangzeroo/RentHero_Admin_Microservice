@@ -14,13 +14,13 @@ exports.get_all_corporations = () => {
     const queryString = `SELECT a.corporation_id, a.corporation_name, a.created_at, a.updated_at,
                                 b.ad_ids, c.staffs
                            FROM corporation a
-                           INNER JOIN (
+                           LEFT OUTER JOIN (
                              SELECT corporation_id, JSON_AGG(ad_id) AS ad_ids
                               FROM ad_to_corp
                               GROUP BY corporation_id
                            ) b
                             ON a.corporation_id = b.corporation_id
-                           INNER JOIN (
+                           LEFT OUTER JOIN (
                              SELECT ab.corporation_id,
                                     JSON_AGG(JSON_BUILD_OBJECT('staff_id', ab.staff_id,
                                                                'first_name', bc.first_name,
@@ -33,12 +33,11 @@ exports.get_all_corporations = () => {
                                                                'created_at', bc.created_at)
                                              ) AS staffs
                                FROM corporation_staff ab
-                               INNER JOIN staff bc
+                               LEFT OUTER JOIN staff bc
                                ON ab.staff_id = bc.staff_id
                              GROUP BY corporation_id
                            ) c
                             ON a.corporation_id = c.corporation_id
-
                         `
 
     query(queryString, (err, results) => {
