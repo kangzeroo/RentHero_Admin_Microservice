@@ -12,7 +12,7 @@ const query = promisify(pool.query)
 exports.get_all_agents = () => {
   const p = new Promise((res, rej) => {
     const getAgents = `SELECT a.agent_id, a.friendly_name, a.email, a.phone, a.actual_email, a.created_at, a.updated_at,
-                              b.operator_ids
+                              b.operator_ids, c.proxies
                          FROM agents a
                          LEFT OUTER JOIN (
                            SELECT agent_id, JSON_AGG(operator_id) AS operator_ids
@@ -20,6 +20,17 @@ exports.get_all_agents = () => {
                             GROUP BY agent_id
                          ) b
                           ON a.agent_id = b.agent_id
+                        LEFT OUTER JOIN (
+                          SELECT ab.agent_id, JSON_AGG(JSON_BUILD_OBJECT('proxy_id', bc.proxy_id,
+                                                                         'corporation_id', bc.corporation_id,
+                                                                         'proxy_email', bc.proxy_email,
+                                                                         'proxy_phone', bc.proxy_phone )) AS proxies
+                            FROM proxies_to_intelligence_groups ab
+                            INNER JOIN corporation_proxy bc
+                            ON ab.proxy_id = bc.proxy_id
+                            GROUP BY ab.agent_id
+                        ) c
+                          ON a.agent_id = c.agent_id
                       `
 
     query(getAgents, (err, results) => {
