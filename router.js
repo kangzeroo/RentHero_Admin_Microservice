@@ -17,6 +17,7 @@ const OperatorRoutes = require('./routes/operator_routes')
 const CorpRoutes = require('./routes/corp_routes')
 // const EmailRoutes = require('./routes/email_routes')
 // const UserQueries = require('./Postgres/Queries/UserQueries')
+const ProxyRoutes = require('./routes/proxy_routes')
 
 // bodyParser attempts to parse any request into JSON format
 const json_encoding = bodyParser.json({type:'*/*'})
@@ -55,6 +56,12 @@ module.exports = function(app){
 	// // corp
 	app.post('/get_all_corporations', [json_encoding, originCheck, Google_JWT_Check], CorpRoutes.get_all_corporations)
 	// app.post('/create_corporation', [json_encoding, originCheck, Google_JWT_Check], CorpRoutes.create_corporation)
+
+
+	// Proxy routes
+	app.post('/get_all_proxies', [json_encoding, originCheck, Google_JWT_Check], ProxyRoutes.get_all_proxies)
+	app.post('/save_proxy_to_int_group', [json_encoding, originCheck, Google_JWT_Check], ProxyRoutes.save_proxy_to_int_group)
+	app.post('/remove_proxy_from_int_group', [json_encoding, originCheck, Google_JWT_Check], ProxyRoutes.remove_proxy_from_int_group)
 
 	// email
 	// app.post('/get_recent_emails', [json_encoding, originCheck], EmailRoutes.get_recent_emails)
