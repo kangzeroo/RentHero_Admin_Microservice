@@ -46,7 +46,7 @@ exports.get_all_corporations = () => {
                               FROM corporation_proxy
                               GROUP BY corporation_id
                           ) d
-                          ON a.corporation_id = c.corporation_id
+                          ON a.corporation_id = d.corporation_id
                         `
 
     query(queryString, (err, results) => {
