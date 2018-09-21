@@ -55,6 +55,8 @@ module.exports = function(app){
 	//
 	// // corp
 	app.post('/get_all_corporations', [json_encoding, originCheck, Google_JWT_Check], CorpRoutes.get_all_corporations)
+	app.post('/save_staff_to_corporation', [json_encoding, originCheck, Google_JWT_Check], CorpRoutes.save_staff_to_corporation)
+
 	// app.post('/create_corporation', [json_encoding, originCheck, Google_JWT_Check], CorpRoutes.create_corporation)
 
 

@@ -59,3 +59,50 @@ exports.get_all_corporations = () => {
   })
   return p
 }
+
+exports.save_staff_to_corporation = (corporation_id, staff_email) => {
+  const p = new Promise((res, rej) => {
+    // const values = [corporation_id, staff_email]
+    query('BEGIN', (err) => {
+      if (err) {
+        console.log(err)
+        rej(err)
+      }
+      const staff_id = uuid.v4()
+      const values = [staff_id, staff_email]
+      const queryString = `INSERT INTO staff (staff_id, email) VALUES ($1, $2)`
+
+      query(queryString, values, (err, results) => {
+        if (err) {
+          console.log(err)
+          rej(err)
+        }
+
+        const values2 = [corporation_id, staff_id]
+        const queryString2 = `INSERT INTO corporation_staff (corporation_id, staff_id) VALUES ($1, $2)`
+
+        query(queryString2, values2, (err, results) => {
+          if (err) {
+            console.log(err)
+            rej(err)
+          }
+
+          query('COMMIT', (err) => {
+            if (err) {
+              console.log(err)
+              rej(err)
+            }
+
+            res({
+              message: 'Successfully added staff to corporation'
+            })
+          })
+        })
+      })
+
+
+    })
+
+  })
+  return p
+}
